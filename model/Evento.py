@@ -5,4 +5,4 @@ class Evento():
         self.dataFim = dataFim
 
     def __str__(self):
-        return "<Evento: %s, %s, %s>" % (self.nome, self.dataInicio, self.dataFim)
+        return "<Evento: %s, %s, %s>" % (self.nome, str(self.dataInicio), str(self.dataFim))
