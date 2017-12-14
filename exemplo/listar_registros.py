@@ -1,6 +1,7 @@
 import sqlite3
 from model.Evento import Evento
 from database.config import database
+from datetime import date
 
 def listarEventos():
     try:
@@ -16,9 +17,11 @@ def listarEventos():
 
         for linha in cursor.fetchall():
             nome = linha[1]
-            dataInicio = linha[2]
-            dataFim = linha[3]
-            evento = Evento(nome, dataInicio, dataFim)
+            dataInicioStr = linha[2]
+            dataInicioObj = str2Time(dataInicioStr)
+            dataFimStr = linha[3]
+            dataFimObj = str2Time(dataFimStr)
+            evento = Evento(nome, dataInicioObj, dataFimObj)
             eventos.append(evento)
 
         conn.close()
@@ -26,6 +29,12 @@ def listarEventos():
         print("Problema com o banco de dados")
 
     return eventos
+    
+def str2Time(dataStr):
+	strData = dataStr.split(' ')
+	strDataSep = strData.split('-')
+	DataObj = date( int(strDataSep[0]), int(strDataSep[1]), int(strDataSep[2]) )
+	return DataObj
 
 def main(arg = []):
     eventos = listarEventos()
